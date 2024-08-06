@@ -1,141 +1,172 @@
-module ALU_control_tb;
-    // Inputs
-    reg [5:0] opcode;
-    reg [5:0] funct;
-    reg [1:0] aluop;
+module ALU_tb;
 
-    // Outputs
-    wire [3:0] alucontrol;
-    integer count = 0;
+  reg [3:0] alucontrol;
+  reg [4:0] ALU_operand_1;
+  reg [4:0] ALU_operand_2;
+  wire [4:0] aluout;
+  wire Zero;
+  integer err_cnt;
+  reg clk;
 
-    // Instantiate the ALU_control module
-    ALU_control dut(funct, opcode, aluop, alucontrol);
+  ALU #(5) dut(alucontrol, ALU_operand_1, ALU_operand_2, aluout, Zero);
 
-    initial begin
-        // Initialize Inputs
-        opcode = 6'b0;
-        funct = 6'b0;
-        aluop = 2'b0;
+  // Expected result calculation
+  reg [4:0] expected_aluout;
+  reg expected_zero;
+
+  initial begin
+    alucontrol = 0;
+    ALU_operand_1 = 0;
+    ALU_operand_2 = 0;
+
+    #10
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0010; // add    
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+             
+    ALU_operand_1 = $random ;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0001; // OR 
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    
+    ALU_operand_1 = $random ;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0110; // subtract (subtraction)
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+             
+    ALU_operand_1 = $random ;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0000; // AND (subtraction)
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+             
+    ALU_operand_1 = $random ;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0010; // ADD (subtraction)
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+             
+    ALU_operand_1 = $random ;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0111; // SLT (subtraction)
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+
+    ALU_operand_1 = $random ;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0110; // beq (subtraction)
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+             
+    ALU_operand_1 = 25;
+    ALU_operand_2 = 25;
+    alucontrol = 4'b0110; // beq (subtraction euqal)
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+             
+    ALU_operand_1 = $random ;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0000; // AND
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+             
+    ALU_operand_1 = $random ;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0001; // OR
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+             
+    ALU_operand_1 = $random ;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0111; // SLT (set less than)
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+             
+    ALU_operand_1 = $random ;
+    ALU_operand_2 = $random ;
+    alucontrol = 4'b0110; // sub again
+    
+    #10;
+    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+
+    //End simulation
+    if(err_cnt == 0) begin
+      $display("\n===============================================");
+      $display("TEST SUCCESS");
+      $display("===============================================\n");
     end
-
-    initial begin
-        // Monitor changes
-        $monitor("Time: %0t | opcode: %b | funct: %b | aluop: %b | alucontrol: %b", $time, opcode, funct, aluop, alucontrol);
-        #10;
-        // Test case: LW, SW
-        opcode = 6'b100011;
-        funct = 6'b000000;
-        aluop = 2'b00;
-        #10;
-        if (alucontrol !== 4'b0010) begin
-            $display("Test Failed: LW, SW");
-            count = count + 1;
-        end else $display("Test success: LW, SW");
-
-        // Test case: BEQ, BNE
-        opcode = 6'b000100;
-        funct = 6'b000000;
-        aluop = 2'b01;
-        #10;
-        if (alucontrol !== 4'b0110) begin
-            $display("Test Failed: BEQ, BNE");
-            count = count + 1;
-        end else $display("Test success: BEQ, BNE");
-
-        // Test case: ADDI
-        opcode = 6'b001000;
-        funct = 6'b000000;
-        aluop = 2'b10;
-        #10;
-        if (alucontrol !== 4'b0010) begin
-            $display("Test Failed: ADDI");
-            count = count + 1;
-        end else $display("Test success: ADDI");
-
-        // Test case: ANDI
-        opcode = 6'b001100;
-        funct = 6'b000000;
-        aluop = 2'b10;
-        #10;
-        if (alucontrol !== 4'b0000) begin
-            $display("Test Failed: ANDI");
-            count = count + 1;
-        end else $display("Test success: ANDI");
-
-        // Test case: ORI
-        opcode = 6'b001101;
-        funct = 6'b000000;
-        aluop = 2'b10;
-        #10;
-        if (alucontrol !== 4'b0001) begin
-            $display("Test Failed: ORI");
-            count = count + 1;
-        end else $display("Test success: ORI");
-
-        // Test case: SLTI
-        opcode = 6'b001010;
-        funct = 6'b000000;
-        aluop = 2'b10;
-        #10;
-        if (alucontrol !== 4'b0111) begin
-            $display("Test Failed: SLTI");
-            count = count + 1;
-        end else $display("Test success: SLTI");
-
-        // Test case: R-type ADD
-        aluop = 2'b11;
-        opcode = 6'b000000;
-        funct = 6'b100000;
-        #10;
-        if (alucontrol !== 4'b0010) begin
-            $display("Test Failed: R-type ADD");
-            count = count + 1;
-        end else $display("Test success: ADD");
-
-        // Test case: R-type SUBTRACT
-        aluop = 2'b11;
-        opcode = 6'b000000;
-        funct = 6'b100010;
-        #10;
-        if (alucontrol !== 4'b0110) begin
-            $display("Test Failed: R-type SUBTRACT");
-            count = count + 1;
-        end else $display("Test success: SUB");
-
-        // Test case: R-type AND
-        aluop = 2'b11;
-        opcode = 6'b000000;
-        funct = 6'b100100;
-        #10;
-        if (alucontrol !== 4'b0000) begin
-            $display("Test Failed: R-type AND");
-            count = count + 1;
-        end else $display("Test success: AND");
-
-        // Test case: R-type OR
-        aluop = 2'b11;
-        opcode = 6'b000000;
-        funct = 6'b100101;
-        #10;
-        if (alucontrol !== 4'b0001) begin
-            $display("Test Failed: R-type OR");
-            count = count + 1;
-        end else $display("Test success: OR");
-
-        // Test case: R-type SLT
-        aluop = 2'b11;
-        opcode = 6'b000000;
-        funct = 6'b101010;
-        #10;
-        if (alucontrol !== 4'b0111) begin
-            $display("Test Failed: R-type SLT");
-            count = count + 1;
-        end else $display("Test success: SLT");
-
-        // Result
-        if(count == 0) $display("All test cases passed");
-        else $display("%d test case(s) failed", count);
-        $finish;
+    else begin
+      $display("\n===============================================");
+      $display("TEST FAIL: %0d testcase", err_cnt);
+      $display("===============================================\n");
     end
+    $finish;
+  end
+
+  initial begin
+    clk = 0;
+    forever begin
+      #5; clk = ~clk;
+    end
+  end
+
+  initial begin
+    err_cnt = 0;
+    expected_aluout = 0;
+    expected_zero = 1;
+    forever begin
+      @(negedge clk); #1;
+        if(alucontrol == 4'b0010) begin
+          expected_aluout = ALU_operand_1 + ALU_operand_2; // add
+          expected_zero = (expected_aluout == 0);
+        end
+        else if(alucontrol == 4'b0110) begin
+          expected_aluout = ALU_operand_1 - ALU_operand_2; // subtract
+          expected_zero = (expected_aluout == 0);
+        end
+        else if(alucontrol == 4'b0000) begin
+          expected_aluout = ALU_operand_1 & ALU_operand_2; // and
+          expected_zero = (expected_aluout == 0);
+        end
+        else if(alucontrol == 4'b0001) begin
+          expected_aluout = ALU_operand_1 | ALU_operand_2; // or
+          expected_zero = (expected_aluout == 0);
+        end
+        else if(alucontrol == 4'b0111) begin
+          expected_aluout = (ALU_operand_1 < ALU_operand_2) ? 1 : 0; // slt
+          expected_zero = (expected_aluout == 0);
+        end
+        else begin
+          expected_aluout = 0;
+          expected_zero = (expected_aluout == 0);
+        end
+          
+        if (aluout !== expected_aluout || Zero !== expected_zero) begin
+          err_cnt = err_cnt + 1;
+          $display("Error: Expected aluout = %0d, Zero = %0b; Got aluout = %0d, Zero = %0b", 
+                 expected_aluout, expected_zero, aluout, Zero);
+        end
+        
+      end
+  end
+
 endmodule
+
+
 

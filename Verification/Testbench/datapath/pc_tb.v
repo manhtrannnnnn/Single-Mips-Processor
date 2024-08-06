@@ -10,7 +10,7 @@ module pc_tb;
   // Outputs
   wire [31:0] pc;
   integer checker;
-  integer count = 1;
+  integer count = 0;
   integer err_cnt = 0;
   // Instantiate the Unit Under Test (UUT)
   pc uut (clk, reset, jump, pcsrc, instr, pc);
@@ -20,76 +20,135 @@ module pc_tb;
 
   initial begin
     // Initialize Inputs
-    clk = 0;
-    reset = 0;
-    jump = 0;
-    pcsrc = 0;
-    instr = 26'b0;
+    clk <= 0;
+    reset <= 0;
+    jump <= 0;
+    pcsrc <= 0;
+    instr <= 26'b0;
 
     // Apply reset
     #10;
     reset = 1;
     #5;
-
+    
     // Test case 1: Normal PC increment
-    instr = 26'h000004; // Some instruction
+    instr = 26'h000004;
     #10;
     //$display("Test case 1: pc = %h (Expected: 00000004)", pc);
 
-    // Test case 2: Branch not taken (pcsrc = 0)
-    pcsrc = 0;
-    instr = 26'h000010; // Branch instruction
+    // Test case 2: Normal PC increment
+    instr = 26'h000008;
     #10;
     //$display("Test case 2: pc = %h (Expected: 00000008)", pc);
 
-    // Test case 3: Branch taken (pcsrc = 1)
+    // Test case 3: Normal PC increment
+    instr = 26'h00000C;
+    #10;
+    //$display("Test case 3: pc = %h (Expected: 0000000C)", pc);
+
+    // Test case 4: Branch instruction (simulated by specific instruction value)
     pcsrc = 1;
-    instr = 26'h000010; // Branch instruction
+    instr = 26'h100014; // Branch to address 0x000014
     #10;
-    //$display("Test case 3: pc = %h (Expected: 0000004c)", pc); // 0x08 + (0x000010 << 2)
+    pcsrc = 0;
+    //$display("Test case 4: pc = %h (Expected: 00000014)", pc);
 
-    // Test case 4: Jump taken
+    // Test case 5: Normal PC increment
+    instr = 26'h000018;
+    #10;
+    //$display("Test case 5: pc = %h (Expected: 00000018)", pc);
+
+    // Test case 6: Jump instruction (simulated by specific instruction value)
     jump = 1;
-    instr = 26'h000020; // Jump instruction
+    instr = 26'h200020; // Jump to address 0x000020
     #10;
-    //$display("Test case 4: pc = %h (Expected: 00000080)", pc); // 0x000020 << 2
-
-    // Test case 5: Reset
     jump = 0;
+    //$display("Test case 6: pc = %h (Expected: 00000020)", pc);
+
+    // Test case 7: Normal PC increment
+    instr = 26'h000024;
+    #10;
+    //$display("Test case 7: pc = %h (Expected: 00000024)", pc);
+
+    // Test case 8: Branch instruction
+    pcsrc = 1;
+    instr = 26'h10002C; // Branch to address 0x00002C
+    #10;
+    pcsrc = 0;
+    //$display("Test case 8: pc = %h (Expected: 0000002C)", pc);
+
+    // Test case 9: Normal PC increment
+    instr = 26'h000030;
+    #10;
+    //$display("Test case 9: pc = %h (Expected: 00000030)", pc);
+
+    // Test case 10: Jump instruction
+    jump = 1;
+    instr = 26'h200038; // Jump to address 0x000038
+    #10;
+    jump = 0;
+    //$display("Test case 10: pc = %h (Expected: 00000038)", pc);
+
+    // Test case 11: Reset
     reset = 0;
     #10;
-    //$display("Test case 5: pc = %h (Expected: 00000000)", pc);
-
-    // Test case 6: Normal PC increment after reset
     reset = 1;
-    pcsrc = 0;
-    instr = 26'h000004; // Some instruction
-    #10;
-    //$display("Test case 6: pc = %h (Expected: 00000004)", pc);
+    //$display("Test case 11: pc = %h (Expected: 00000000)", pc);
 
-    // Test case 7: Jump not taken (jump = 0)
-    jump = 0;
-    instr = 26'h000040; // Jump instruction
+    // Test case 12: Normal PC increment
+    instr = 26'h000004;
     #10;
-    //$display("Test case 7: pc = %h (Expected: 00000008)", pc);
+    //$display("Test case 12: pc = %h (Expected: 00000004)", pc);
 
-    // Test case 8: Branch not taken (pcsrc = 0)
-    pcsrc = 0;
-    instr = 26'h000080; // Branch instruction
+    // Test case 13: Normal PC increment
+    instr = 26'h000008;
     #10;
-    //$display("Test case 8: pc = %h (Expected: 0000000C)", pc);
+    //$display("Test case 13: pc = %h (Expected: 00000008)", pc);
 
-    // Test case 9: Branch taken (pcsrc = 1)
+    // Test case 14: Branch instruction
     pcsrc = 1;
-    instr = 26'h000100; // Branch instruction
+    instr = 26'h100010; // Branch to address 0x000010
     #10;
-    //$display("Test case 9: pc = %h (Expected: 000000410)", pc); // 0x0C + (0x000100 << 2)
+    pcsrc = 0;
+    //$display("Test case 14: pc = %h (Expected: 00000010)", pc);
 
-    // Test case 10: Jump taken after branch
-    jump = 1;
-    instr = 26'h000200; // Jump instruction
+    // Test case 15: Normal PC increment
+    instr = 26'h000014;
     #10;
-    //$display("Test case 10: pc = %h (Expected: 00000800)", pc); // 0x000200 << 2
+    //$display("Test case 15: pc = %h (Expected: 00000014)", pc);
+
+    // Test case 16: Jump instruction
+    jump = 1;
+    instr = 26'h20001C; // Jump to address 0x00001C
+    #10;
+    jump = 0;
+    //$display("Test case 16: pc = %h (Expected: 0000001C)", pc);
+
+    // Test case 17: Normal PC increment
+    instr = 26'h000020;
+    #10;
+    //$display("Test case 17: pc = %h (Expected: 00000020)", pc);
+
+    // Test case 18: Branch instruction
+    pcsrc = 1;
+    instr = 26'h100028; // Branch to address 0x000028
+    #10;
+    pcsrc = 0;
+    //$display("Test case 18: pc = %h (Expected: 00000028)", pc);
+
+    // Test case 19: Normal PC increment
+    instr = 26'h00002C;
+    #10;
+    //$display("Test case 19: pc = %h (Expected: 0000002C)", pc);
+
+    // Test case 20: Jump instruction
+    jump = 1;
+    instr = 26'h200034; // Jump to address 0x000034
+    #10;
+    jump = 0;
+    //$display("Test case 20: pc = %h (Expected: 00000034)", pc);
+    
+
 
     // Finish simulation
     if(err_cnt == 0) begin
@@ -107,7 +166,7 @@ module pc_tb;
   
   initial begin
     forever begin
-        @(posedge clk or negedge reset); #1;
+        @(posedge clk); #1;
             if(!reset) checker = 0;
             else begin
                 if(jump) checker = instr[25:0] << 2;
@@ -126,5 +185,6 @@ module pc_tb;
   end
   
 endmodule
+
 
 

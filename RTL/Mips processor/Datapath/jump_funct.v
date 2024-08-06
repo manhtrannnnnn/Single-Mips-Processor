@@ -7,3 +7,5 @@ module jump_funct #(parameter WIDTH = 32)(
   assign pcjump = {pcadder[31:28], instr, 2'b00}; // Concatenate upper bits of pcadder and instr, shift left by 2
 
 endmodule
+
+

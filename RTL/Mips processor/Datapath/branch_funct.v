@@ -12,3 +12,5 @@ module branch_funct #(parameter WIDTH = 32)(
   assign pcbranch = shiftleft + pcadder;
 
 endmodule
+
+
