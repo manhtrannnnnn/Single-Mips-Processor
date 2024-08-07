@@ -1,6 +1,7 @@
 module REG_tb;
 
   reg           clk;
+  reg           reset;
   reg   [4:0]   REG_address1;
   reg   [4:0]   REG_address2;
   reg   [4:0]   REG_address_wb;
@@ -10,7 +11,7 @@ module REG_tb;
   wire  [31:0]  data_out_2;
 
   // Instantiate the module
-  REG uut (clk, REG_address1, REG_address2, REG_address_wb, regwrite, data_wb, data_out_1, data_out_2);
+  REG uut (clk, reset, REG_address1, REG_address2, REG_address_wb, regwrite, data_wb, data_out_1, data_out_2);
 
   // Clock generation
   initial begin
@@ -46,12 +47,12 @@ module REG_tb;
     REG_address_wb <= 0;
     regwrite <= 0;
     data_wb <= 0;
-
+    reset <= 0;
     // Wait for reset
     #10;
-
+    reset <= 1;
     // Write some data to the registers
-    regwrite = 1;
+    regwrite <= 1;
 
     // Write values to registers 1 to 15
     REG_address_wb = 5'b00001; data_wb = 32'hDEADBEEF; #10;
@@ -82,9 +83,19 @@ module REG_tb;
     REG_address1 = 5'b01011; REG_address2 = 5'b01100; #10; check_output(32'hAAAAAAAA, 32'h55555555);
     REG_address1 = 5'b01101; REG_address2 = 5'b01110; #10; check_output(32'h12341234, 32'h56785678);
     REG_address1 = 5'b01111; REG_address2 = 5'b00000; #10; check_output(32'h9ABC9ABC, 32'h00000000); // Reading from register 0 should return 0
-
+    
+    //reset stage;
+    reset = 0;
+    #10;
+    reset = 1;
+    
+    REG_address1 = 5'b00001; REG_address2 = 5'b00010; #10; check_output(32'h0, 32'h0);
+    REG_address1 = 5'b00011; REG_address2 = 5'b00100; #10; check_output(32'h0, 32'h0);
+    REG_address1 = 5'b00101; REG_address2 = 5'b00110; #10; check_output(32'h0, 32'h0);
+   
     // End of test
-    $finish;
+     $finish;
   end
 
 endmodule
+
