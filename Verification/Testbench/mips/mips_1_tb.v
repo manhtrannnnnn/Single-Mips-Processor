@@ -41,7 +41,7 @@ module mips_1_tb;
     #10;
     reset <= 1;
 
-    // Test case 1: Load Word (lw) Instruction
+ // Test case 1: Load Word (lw) Instruction
     instr = {6'b100011, 5'b00001, 5'b00010, 16'b0000000000000100}; // lw R2, 4(R1)
     readdata = 32'hDEADBEEF; // Simulate memory read data
     #10;
@@ -69,10 +69,26 @@ module mips_1_tb;
     #10;
     $display("Test Case 5 - LW Instruction: writedata = %h (Expected: B16B00B5)", writedata);
     
-    // Test case 6: Store Word (lw) Instruction
+    // Test case 6: Store Word (sw) Instruction
     instr = {6'b100011, 5'b00101, 5'b00110, 16'b0000000000001100}; // sw R6, 12(R5)
     #10;
     $display("Test Case 6 - SW Instruction: writedata = %h (Expected: R6 value)", writedata);
+    
+    // Test case 7: Branch on Equal (beq) Instruction
+    instr = {6'b000100, 5'b00010, 5'b00010, 16'b0000000000000010}; // beq R2, R2, offset 2
+    
+    #10;
+    $display("Test Case 7 - BEQ Instruction: pc = %h (Expected: pc + 8 if R2 == R2)", pc);
+
+    // Test case 8: Branch on Equal (bne) Instruction
+    instr = {6'b000100, 5'b00010, 5'b00011, 16'b0000000000000010}; // beq R2, R3, offset 2
+    #10;
+    $display("Test Case 8 - BNE Instruction: pc = %h (Expected: pc + 8 if R2 == R3)", pc);
+
+    // Test case 9: Jump (j) Instruction
+    instr = {6'b000010, 26'b00000000000000000000000001}; // j address 1
+    #10;
+    $display("Test Case 9 - J Instruction: pc = %h (Expected: jump to address 1)", pc);
     
 
     // End simulation
@@ -82,6 +98,7 @@ module mips_1_tb;
   end
 
 endmodule
+
 
 
 

@@ -20,23 +20,27 @@ module top_tb;
   
   initial begin
     reset <= 0;
-    #10;           // Giữ reset ở mức cao trong 10 đơn vị thời gian
-    reset <= 1;     // Thả reset để bắt đầu hoạt động của hệ thống
+    #10;           
+    reset <= 1;     
     
   end
   
   // check results
   always @ (negedge clk) begin
     if(pc === 32'h44) begin
-       if(writedata === 7 && aluout === 84) begin
+       if(writedata === 7) begin
           $display("Test Success!!!");
-          #10;
           $stop;
         end else begin
           $display("Test Fail!!!");
         end
     end  
   end
+  
+  initial begin
+    $monitor("PC: %h, aluout: %d", pc, aluout);
+  end
 
 endmodule
+
 

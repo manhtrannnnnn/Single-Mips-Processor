@@ -18,7 +18,7 @@ module datapath_tb;
   wire [31:0] pc;
   wire [31:0] aluout;
   wire [31:0] writedata;
-
+  
   // Instantiate the Unit Under Test (UUT)
   datapath uut (
     .clk(clk),
@@ -148,24 +148,25 @@ module datapath_tb;
     #10;
     $display("ADDI Instruction: aluout = %h (Expected: R3 + 5)", aluout);
 
-    // Test Case 11: Arithmetic instruction (ADD)
-    instr = {6'b000000, 5'b00001, 5'b00010, 5'b00011, 5'b00000, 6'b100000}; // ADD R3, R1, R2
-    regdst = 1;
-    alusrc = 0;
-    alucontrol = 4'b0010; // ALU control for ADD
-    regwrite = 1;
-    #10;
-    $display("ADD Instruction: aluout = %h (Expected: sum of R1 and R2)", aluout);
-
-    // Test Case 12: Memory instruction (LW)
+    // Test Case 11: Memory instruction (LW)
     instr = {6'b100011, 5'b00001, 5'b00010, 16'b0000000000000100}; // LW R2, 4(R1)
     regdst = 0;
     alusrc = 1;
     memtoreg = 1;
     regwrite = 1;
-    readdata = 32'h12345678; // Data from memory
+    readdata = 32'hF; // Data from memory
     #10;
-    $display("LW Instruction: data_wb = %h (Expected: 12345678)", writedata);
+    $display("LW Instruction: data_wb = %h (Expected: F)", writedata);
+    
+    // Test Case 12: Store Word (SW) instruction
+    instr = {6'b101011, 5'b00001, 5'b00010, 16'h0004}; // SW R2, 4(R1)
+    regdst = 0; // Destination register is not used for store instruction
+    alusrc = 1; // Use immediate value for the second operand
+    alucontrol = 4'b0010; // ALU control for ADD (to calculate the effective address)
+    regwrite = 0; // No register write for store instruction
+    #10;
+    $display("SW Instruction: Address = %h, Value = %h (Expected: store R2 to memory location R1 + 4)", aluout, writedata);
+  
 
     // Test Case 13: Jump instruction (J)
     instr = {6'b000010, 26'b00000000000000000000000001}; // J 1

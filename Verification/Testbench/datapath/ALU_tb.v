@@ -21,89 +21,96 @@ module ALU_tb;
 
     #10
     ALU_operand_1 = $random;
-    ALU_operand_2 = $random ;
-    alucontrol = 4'b0010; // add    
+    ALU_operand_2 = $random;
+    alucontrol = 4'b0010; // add
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("ADD: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
              
-    ALU_operand_1 = $random ;
-    ALU_operand_2 = $random ;
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random;
     alucontrol = 4'b0001; // OR 
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("OR: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
     
-    ALU_operand_1 = $random ;
-    ALU_operand_2 = $random ;
-    alucontrol = 4'b0110; // subtract (subtraction)
+    ALU_operand_1 = $random;
+    ALU_operand_2 = 5;
+    alucontrol = 4'b0110; // subtract
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("SUB: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
              
-    ALU_operand_1 = $random ;
-    ALU_operand_2 = $random ;
-    alucontrol = 4'b0000; // AND (subtraction)
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random;
+    alucontrol = 4'b0000; // AND
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("AND: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
              
-    ALU_operand_1 = $random ;
-    ALU_operand_2 = $random ;
-    alucontrol = 4'b0010; // ADD (subtraction)
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random;
+    alucontrol = 4'b0010; // ADD
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("ADD: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
              
-    ALU_operand_1 = $random ;
-    ALU_operand_2 = $random ;
-    alucontrol = 4'b0111; // SLT (subtraction)
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random;
+    alucontrol = 4'b0111; // SLT (set less than)
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("SLT: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
 
-    ALU_operand_1 = $random ;
-    ALU_operand_2 = $random ;
-    alucontrol = 4'b0110; // beq (subtraction)
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random;
+    alucontrol = 4'b0110; // beq (subtract)
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("SUB: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
              
     ALU_operand_1 = 25;
     ALU_operand_2 = 25;
-    alucontrol = 4'b0110; // beq (subtraction euqal)
+    alucontrol = 4'b0110; // beq (subtract equal)
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
-             
-    ALU_operand_1 = $random ;
-    ALU_operand_2 = $random ;
+    $display("BEQ(equal): In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random;
+    alucontrol = 4'b0110; // beq (subtract equal)
+    #10;
+    $display("BEQ(not equal): In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+         
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random;
     alucontrol = 4'b0000; // AND
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("AND: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
              
-    ALU_operand_1 = $random ;
-    ALU_operand_2 = $random ;
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random;
     alucontrol = 4'b0001; // OR
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("OR: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
              
-    ALU_operand_1 = $random ;
-    ALU_operand_2 = $random ;
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random;
     alucontrol = 4'b0111; // SLT (set less than)
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("SLT: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
              
-    ALU_operand_1 = $random ;
-    ALU_operand_2 = $random ;
+    ALU_operand_1 = $random;
+    ALU_operand_2 = $random;
     alucontrol = 4'b0110; // sub again
     
     #10;
-    $display("[Time: %0t] In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
-             $time, ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
+    $display("SUB: In1 = %0d, In2 = %0d, aluout = %0d, Zero = %0b, Expected: aluout = %0d, Zero = %0b", 
+             ALU_operand_1, ALU_operand_2, aluout, Zero, expected_aluout, expected_zero);
 
     //End simulation
     if(err_cnt == 0) begin
@@ -113,7 +120,7 @@ module ALU_tb;
     end
     else begin
       $display("\n===============================================");
-      $display("TEST FAIL: %0d testcase", err_cnt);
+      $display("TEST FAIL: %0d testcase(s) failed", err_cnt);
       $display("===============================================\n");
     end
     $finish;
@@ -138,23 +145,23 @@ module ALU_tb;
         end
         else if(alucontrol == 4'b0110) begin
           expected_aluout = ALU_operand_1 - ALU_operand_2; // subtract
-          expected_zero = (expected_aluout == 0);
+          expected_zero = (ALU_operand_1 == ALU_operand_2);
         end
         else if(alucontrol == 4'b0000) begin
           expected_aluout = ALU_operand_1 & ALU_operand_2; // and
-          expected_zero = (expected_aluout == 0);
+          expected_zero = (ALU_operand_1 == ALU_operand_2);
         end
         else if(alucontrol == 4'b0001) begin
           expected_aluout = ALU_operand_1 | ALU_operand_2; // or
-          expected_zero = (expected_aluout == 0);
+          expected_zero = (ALU_operand_1 == ALU_operand_2);
         end
         else if(alucontrol == 4'b0111) begin
           expected_aluout = (ALU_operand_1 < ALU_operand_2) ? 1 : 0; // slt
-          expected_zero = (expected_aluout == 0);
+          expected_zero = (ALU_operand_1 == ALU_operand_2);
         end
         else begin
           expected_aluout = 0;
-          expected_zero = (expected_aluout == 0);
+          expected_zero = (ALU_operand_1 == ALU_operand_2);
         end
           
         if (aluout !== expected_aluout || Zero !== expected_zero) begin
@@ -167,6 +174,4 @@ module ALU_tb;
   end
 
 endmodule
-
-
 
