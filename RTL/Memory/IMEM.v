@@ -5,7 +5,7 @@ module IMEM (
   reg [31:0] instr_memory[31:0];
   
   initial begin
-    $readmemh("D:/BACH KHOA/Verification/Testbench/top/testcase4.txt", instr_memory); //Use for verification
+    $readmemh("D:/BACH KHOA/Verification/Testbench/top/testcase3.txt", instr_memory); //Use for verification
   end
 
   assign instr = instr_memory[pc[31:2]];

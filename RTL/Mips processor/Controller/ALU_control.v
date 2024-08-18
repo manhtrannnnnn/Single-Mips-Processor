@@ -5,6 +5,7 @@ module ALU_control(
   output reg [3:0] alucontrol
 );
 
+
   always @(*) begin
       case (aluop)
         2'b00: alucontrol = 4'b0010; // lw, sw

@@ -8,6 +8,7 @@ module top(
   
   wire [31:0] instr;
   wire memwrite;
+  
   //Data Memory
   DMEM data_memory(clk, memwrite, aluout, writedata, readdata);
   

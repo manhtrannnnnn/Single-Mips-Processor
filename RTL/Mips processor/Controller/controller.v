@@ -9,7 +9,7 @@ module controller(
 );
   wire branch;
   wire [1:0] aluop;
-
+  
   assign pcsrc = branch & zero;
 
   control maindecoder(opcode, branch, regdst, memtoreg, alusrc, regwrite, jump, memwrite, aluop);

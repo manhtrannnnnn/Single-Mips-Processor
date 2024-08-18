@@ -9,6 +9,7 @@ module mips(
 
   wire zero, pcsrc, regdst, memtoreg, alusrc, regwrite, jump;
   wire [3:0] alucontrol;
+
 //controller
 controller c(instr[5:0], instr[31:26], zero, alucontrol, pcsrc, regdst, memtoreg, alusrc, regwrite, memwrite, jump);
 

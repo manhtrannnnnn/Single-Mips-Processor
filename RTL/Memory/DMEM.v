@@ -5,7 +5,6 @@ module DMEM (
     input  [31:0]    DMEM_data_in,
     output wire [31:0]  readdata  
 );
-
   reg [31:0] data_memory [31:0]; 
 
   always @(posedge clk) begin

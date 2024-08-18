@@ -11,7 +11,6 @@ module control(
 );
       
     reg [8:0] tmp;
-
     assign {regwrite, regdst, alusrc, branch, memwrite, memtoreg, aluop, jump} = tmp;
 
     always @(*) begin
