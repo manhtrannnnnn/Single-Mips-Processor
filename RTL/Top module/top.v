@@ -2,13 +2,12 @@ module top(
   input clk, reset,
   output [31:0] pc,
   output [31:0] aluout, 
-  output [31:0] writedata,
-  output [31:0] readdata
+  output [31:0] readdata, 
+  output [31:0] writedata
   );
   
   wire [31:0] instr;
   wire memwrite;
-  
   //Data Memory
   DMEM data_memory(clk, memwrite, aluout, writedata, readdata);
   
