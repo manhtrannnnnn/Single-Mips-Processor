@@ -92,7 +92,6 @@ module mips_0_tb;
 
 
     // End simulation
-
     // Finish the simulation
     $finish;
   end
