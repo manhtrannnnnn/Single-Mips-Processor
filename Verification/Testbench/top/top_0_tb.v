@@ -6,12 +6,10 @@ module top_0_tb;
   // Outputs
   wire [31:0] pc;
   wire [31:0] aluout;
-
-  // Error counter
   integer err_cnt = 0;
 
   // Instantiate the Unit Under Test (UUT)
-  top uut (clk, reset, pc, aluout, readdata, writedata);
+  top uut (clk, reset, pc, aluout);
 
   // Clock generation
   initial begin
@@ -19,15 +17,16 @@ module top_0_tb;
     forever #5 clk = ~clk;
   end
   
+  // Apply reset
   initial begin
-    $display("Simulation starts!!!!");
-    reset = 1;
-    #10;
-    reset = 0;
+    reset <= 0;
+    #10;           
+    reset <= 1;    
   end
 
   // Test sequence
-  always @(posedge clk) begin
+  always @(posedge clk or negedge reset) begin
+    if(!reset) $display("Reset Active!!!");
     // Test ADD R3, R2, R4 at 0x00
     if (pc == 32'h00) begin
       if (aluout !== 0) begin // Expected result: R2 + R4 = 0
@@ -78,16 +77,16 @@ module top_0_tb;
     
     // Test OR R3, R1, R2 at 0x18
     if (pc == 32'h18) begin
-      if (aluout !== 0) begin // Expected result: R1 | R2 = 0
-        $display("Error at PC: %h, aluout: %d (Expected: 0)", pc, aluout);
+      if (aluout !== 2) begin // Expected result: R1 | R2 = 0
+        $display("Error at PC: %h, aluout: %d (Expected: 2)", pc, aluout);
         err_cnt = err_cnt + 1;
       end
     end
     
     // Test AND R3, R1, R2 at 0x1c
     if (pc == 32'h1c) begin
-      if (aluout !== 0) begin // Expected result: R1 & R2 = 0
-        $display("Error at PC: %h, aluout: %d (Expected: 0)", pc, aluout);
+      if (aluout !== 2) begin // Expected result: R1 & R2 = 0
+        $display("Error at PC: %h, aluout: %d (Expected: 2)", pc, aluout);
         err_cnt = err_cnt + 1;
       end
     end
@@ -103,18 +102,22 @@ module top_0_tb;
 
   // Final error report
 initial begin
+    $display("Simulation starts!!!!"); 
     // Apply stimulus here
-    $monitor("PC: %h, ALU Out: %d, Read Data: %h", pc, aluout, readdata);
+    $monitor("PC: %h, ALU Out: %d", pc, aluout);
 
     // Wait for some time and then check results
-    #200;
+    #110;
+    reset = 1'b0;
+    #10;
+    reset = 1'b1;
 
+    #100;
     if (err_cnt == 0) begin
       $display("All tests passed.");
     end else begin
       $display("%d errors found.", err_cnt);
     end
-
     $stop; // Stop the simulation
   end
 

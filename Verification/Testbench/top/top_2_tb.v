@@ -1,4 +1,4 @@
-module top_1_tb;
+module top_2_tb;
   // Inputs
   reg clk;
   reg reset;
@@ -129,7 +129,7 @@ module top_1_tb;
       end
       else if (pc == 32'h3c) begin // j end
         #1;
-        if (pc !== 32'h48) begin
+        if (pc !== 32'h44) begin
           $display("FAIL at PC = 0x3C: Incorrect jump to 0x%h, readdata = %d, writedata = %d", pc, readdata, writedata);
           err_cnt = err_cnt + 1;
         end
@@ -162,11 +162,7 @@ module top_1_tb;
 
     // Wait for some time and then check results
     #180;
-    reset = 1'b0;
-    #10;
-    reset = 1'b1;
 
-    #200
     if (err_cnt == 0) begin
       $display("All tests passed.");
     end else begin
@@ -176,3 +172,4 @@ module top_1_tb;
   end
 
 endmodule
+

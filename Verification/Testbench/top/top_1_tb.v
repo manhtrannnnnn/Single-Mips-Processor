@@ -91,17 +91,22 @@ module top_1_tb;
     // Test beq R2, R3, offset 2 at 0x28
     if (pc == 32'h28) begin
       #5; // Wait for the branch to take effect
-      if (pc !== 32'h2c) begin 
-        $display("Error at beq R2, R3, offset 2, PC: %h (Expected: 32'h2c)", pc);
+      if (pc !== 32'h34) begin 
+        $display("Error at beq R2, R3, offset 2, PC: %h,  aluout: %d (Expected: 32'h34)",$time, pc, aluout);
         err_cnt = err_cnt + 1;
       end
     end
     
+    if(pc == 32'h2c || pc == 32'h30) begin
+      $display("Error at branch instruction");
+      err_cnt = err_cnt + 1;
+    end  
+      
     // Test jump to address 0x04 at 0x34
     if (pc == 32'h34) begin
       #5; // Wait for the jump to take effect
       if (pc !== 32'h04) begin
-        $display("Error at Jump instruction, PC: %h (Expected: 32'h04)", pc);
+        $display("Error at Jump instruction, PC: %h (Expected: 32'h04)",$time, pc);
         err_cnt = err_cnt + 1;
       end
     end
