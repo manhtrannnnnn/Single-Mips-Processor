@@ -13,16 +13,16 @@ The processor supports a subset of MIPS instructions, including arithmetic opera
 - **Modular Design**: The processor is designed in a modular fashion with distinct components like the ALU, register file, and control unit.
 - **Verilog Implementation**: The processor is described using Verilog HDL, making it synthesizable for FPGA implementation.
 
-## Architecture Overview
+## Interface Overview
+The instruction and data memories are separated from the main processor and connected by address and data busses. This is more realistic, because most real processors have external memory. It also illustrates how the processor can communicate with the outside world.
+The processor is composed of a datapath and a controller. The controller, in turn, is composed of the Control and the ALUControl. Figure below shows a block diagram of the single-cycle MIPS processor interfaced to external memories.
 
-The MIPS processor is composed of several key components:
-
-1. **Program Counter (PC)**: Holds the address of the current instruction.
-2. **Instruction Memory**: Stores the instructions to be executed.
-3. **Register File**: A set of registers used to store operands and results.
-4. **ALU (Arithmetic Logic Unit)**: Performs arithmetic and logical operations.
-5. **Data Memory**: Stores data that can be loaded and stored by the processor.
-6. **Control Unit**: Generates control signals based on the opcode of the instruction.
+1. **Controller**: The controller (composed of the ALU Control and the Control unit) operates with the datapath to ensure
+the correct execution of instructions.
+2. **Datapath**: The datapath of the processor consists of four main components: the Program Counter (PC), the Arithmetic Logic Unit (ALU), the Register File, and the overall Datapath.
+3. **Instruction Memory**: Component of the computer system that stores
+the instructions of a program.
+4. **Data Memory**: Data memory stores and retrieves data actively processed by the ALU.
 
 The diagram below provides a high-level view of the MIPS processor architecture:
 
@@ -32,9 +32,9 @@ The diagram below provides a high-level view of the MIPS processor architecture:
 
 ## Project Structure
 
-- **/src**: Contains the Verilog source files for each module of the processor.
-- **/testbench**: Includes the testbenches used for simulation and verification of the processor.
-- **/docs**: Documentation and diagrams related to the project.
+- **/rtl**: Contains the Verilog source files for each module of the processor.
+- **/verification**: Includes the testbenches used for simulation and verification of the processor.
+- **/specification**: Documentation and diagrams related to the project.
 - **README.md**: This file, providing an overview of the project.
 
 ## Simulation and Testing
