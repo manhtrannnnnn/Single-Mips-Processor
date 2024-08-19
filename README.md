@@ -10,7 +10,7 @@ The processor supports a subset of MIPS instructions, including arithmetic opera
 
 - **Single-Cycle Design**: Executes each instruction in a single clock cycle.
 - **Instruction Set**: Supports key MIPS instructions like `add`, `sub`, `and`, `or`, `slt`, `lw`, `sw`, `beq`, `j`, and others.
-- **Modular Design**: The processor is designed in a modular fashion with distinct module: controller, datapath, instruction memory and data memory
+- **Modular Design**: The processor is designed in a modular fashion with distinct modules: controller, datapath, instruction memory and data memory.
 - **Verilog Implementation**: The processor is described using Verilog HDL, making it synthesizable for FPGA implementation.
 
 ## Interface Overview
@@ -24,7 +24,7 @@ the correct execution of instructions.
 the instructions of a program.
 4. **Data Memory**: Data memory stores and retrieves data actively processed by the ALU.
 
-The diagram below provides a high-level view of the MIPS processor architecture:
+The diagram below provides a high-level view of the MIPS processor interface:
 
 ![Processor Interface](https://github.com/manhtrannnnnn/Single-Mips-Processor/blob/main/Picture/processor_interface.png)
 
