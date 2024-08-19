@@ -28,7 +28,6 @@ The diagram below provides a high-level view of the MIPS processor architecture:
 
 ![Processor Interface](https://github.com/manhtrannnnnn/Single-Mips-Processor/blob/main/Picture/processor_interface.png)
 
-*Note: Replace `mips_architecture.png` with the actual file name of your diagram image.*
 
 ## Project Structure
 
