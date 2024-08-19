@@ -1,7 +1,7 @@
 module datapath (
     input clk, reset,
     input regdst, pcsrc,
-    input memtoreg, aluscr,
+    input memtoreg, alusrc,
     input regwrite, jump,
     input   [3:0] alucontrol,
     input   [31:0] instr,

@@ -14,18 +14,18 @@ module REG(
 
   always @(posedge clk or negedge reset) begin
     if (!reset) begin
-      // setup register = 0   
+      // setup register = 0
+      
       for (i = 0; i < 32; i = i + 1) begin
         REGISTER[i] <= 0;
       end
+    end else if (regwrite) begin
+      REGISTER[REG_address_wb] <= data_wb;
     end
   end 
-  
-  always @(*) begin 
-    if(regwrite) REGISTER[REG_address_wb] = data_wb;
-  end
-  
+
   assign data_out_1 = (REG_address1 != 0) ? REGISTER[REG_address1] : 0;
   assign data_out_2 = (REG_address2 != 0) ? REGISTER[REG_address2] : 0;
 endmodule
+
 
